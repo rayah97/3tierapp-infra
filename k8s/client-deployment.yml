@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: client
-          image: rayahh/3tier-front:latest
+          image: rayahh/3tier-front:v1.28.0
           ports:
             - containerPort: 3000
