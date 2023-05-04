@@ -12,6 +12,7 @@ spec:
       labels:
         component: web
     spec:
+    
       containers:
         - name: client
           image: rayahh/3tier-front
