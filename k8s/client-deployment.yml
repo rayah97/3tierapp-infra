@@ -15,7 +15,7 @@ spec:
     
       containers:
         - name: client
-          image: rayahh/3tier-front
+          image: rayahh/3tier-front:v1.28.0
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
