@@ -10,12 +10,12 @@ jobs:
         uses: actions/checkout@v2
       - name: Update Image Tag
         run: |
-          sed -i "s/tag:.*/tag: ${{ github.event.client-image-tag }}/g" deployment.yaml
+          sed -i "s/\(image:.*:\).*$/\1${{ github.event.client-image-tag }}/g" client-deployment.yml
       - name: Commit Changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add deployment.yaml
+          git add client-deployment.yml
           git commit -m "Update image tag to ${{ github.event.client-image-tag }}"
           git push
       - name: Push Changes to Infra Repo
