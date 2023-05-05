@@ -20,6 +20,9 @@ jobs:
           sed -i "s|rayahh/3tier-front:.*|rayahh/3tier-front:${NEW_TAG}|" k8s/client-deployment.yml
           cat k8s/client-deployment.yml
           echo "New image tag: $NEW_TAG"
+      - name: Check diff
+        run: |
+          git diff --exit-code k8s/client-deployment.yml || (echo "No changes to commit" && exit 1)
       - name: Commit Changes
         run: |
           git config --local user.email "action@github.com"

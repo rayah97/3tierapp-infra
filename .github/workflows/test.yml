@@ -1,0 +1,28 @@
+# name: Update Deployment
+
+# on:
+#   repository_dispatch:
+#     types: [update-deployment]
+# jobs:
+#   update-image-tag:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+#       - name: Update deployment manifest
+#         run: |
+#           sed -i "s|rayahh/3tier-front:.*|rayahh/3tier-front:${{ needs.create-release.outputs.new_tag }}|" k8s/client-deployment.yml
+#           cat k8s/client-deployment.yml
+#           echo "New image tag: ${{ needs.create-release.outputs.new_tag }}"
+#       - name: Commit Changes
+#         run: |
+#           git config --local user.email "action@github.com"
+#           git config --local user.name "GitHub Action"
+#           git add k8s/client-deployment.yml
+#           git commit -m "Update image tag to ${{ github.event.client-image-tag }}"
+#           git push
+#       - name: Push Changes to Infra Repo
+#         uses: ad-m/github-push-action@master
+#         with:
+#           branch: main
+#           github_token: ${{ secrets.INFRA_REPO_TOKEN }}
