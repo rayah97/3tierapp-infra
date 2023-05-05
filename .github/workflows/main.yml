@@ -15,13 +15,13 @@ jobs:
           NEW_TAG=$(curl -s -S "https://registry.hub.docker.com/v2/repositories/rayahh/3tier-front/tags/" | jq '."results"[]["name"]' | sed -n 1p | sed -e "s/^.//;s/.$//")
           echo "::set-output name=new_tag::$NEW_TAG"
           echo $NEW_TAG
-
         id: get-new-tag
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Update deployment manifest
+        env:
+          NEW_TAG: ${{ steps.get-new-tag.outputs.new_tag }}
         run: |
-
           echo $NEW_TAG
           sed -i "s|rayahh/3tier-front:.*|rayahh/3tier-front:${NEW_TAG}|" k8s/client-deployment.yml
           cat k8s/client-deployment.yml
