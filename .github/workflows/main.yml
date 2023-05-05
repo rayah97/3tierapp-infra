@@ -1,5 +1,4 @@
 name: Update Deployment
-
 on:
   repository_dispatch:
     types: [update-deployment]
