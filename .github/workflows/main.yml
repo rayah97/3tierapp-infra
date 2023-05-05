@@ -21,6 +21,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Update deployment manifest
         run: |
+
+          echo $NEW_TAG
           sed -i "s|rayahh/3tier-front:.*|rayahh/3tier-front:${NEW_TAG}|" k8s/client-deployment.yml
           cat k8s/client-deployment.yml
           echo "New image tag: $NEW_TAG"
