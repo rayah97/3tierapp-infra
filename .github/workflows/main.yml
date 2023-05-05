@@ -1,0 +1,25 @@
+name: Update Deployment
+on:
+  repository_dispatch:
+    types: [update-deployment]
+jobs:
+  update-image-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Update Image Tag
+        run: |
+          sed -i "s/tag:.*/tag: ${{ github.event.client-image-tag }}/g" deployment.yaml
+      - name: Commit Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add deployment.yaml
+          git commit -m "Update image tag to ${{ github.event.client-image-tag }}"
+          git push
+      - name: Push Changes to Infra Repo
+        uses: ad-m/github-push-action@master
+        with:
+          branch: main
+          github_token: ${{ secrets.INFRA_REPO_TOKEN }}
