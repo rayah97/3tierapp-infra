@@ -9,9 +9,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Update Image Tag
+      - name: Update deployment manifest
         run: |
-          sed -i "s/\(image:.*:\).*$/\1${{ github.event.client-image-tag }}/g" k8s/client-deployment.yml
+          sed -i "s|rayahh/3tier-front:.*|rayahh/3tier-front:${{ needs.create-release.outputs.new_tag }}|" k8s/client-deployment.yml
+          cat k8s/client-deployment.yml
+          echo "New image tag: ${{ needs.create-release.outputs.new_tag }}"
       - name: Commit Changes
         run: |
           git config --local user.email "action@github.com"
