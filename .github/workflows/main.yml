@@ -8,6 +8,8 @@ jobs:
   update-image-tag:
     runs-on: ubuntu-latest
     steps:
+      - name: Install jq
+        run: sudo apt-get install jq -y
       - name: Get new tag
         run: |
           NEW_TAG=$(curl -s -S "https://registry.hub.docker.com/v2/repositories/rayahh/3tier-front/tags/" | jq '."results"[]["name"]' | sed -n 1p | sed -e "s/^.//;s/.$//")
