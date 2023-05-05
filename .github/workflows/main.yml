@@ -14,7 +14,8 @@ jobs:
         run: |
           NEW_TAG=$(curl -s -S "https://registry.hub.docker.com/v2/repositories/rayahh/3tier-front/tags/" | jq '."results"[]["name"]' | sed -n 1p | sed -e "s/^.//;s/.$//")
           echo "::set-output name=new_tag::$NEW_TAG"
-          echo $(curl -s -S "https://registry.hub.docker.com/v2/repositories/rayahh/3tier-front/tags/")
+          echo $(curl -s -S "https://registry.hub.docker.com/v2/repositories/rayahh/3tier-front/tags/" | jq '."results"[]["name"]' | sed -n 1p | sed -e "s/^.//;s/.$//"))
+          echo $NEW_TAG"
         id: get-new-tag
       - name: Checkout code
         uses: actions/checkout@v2
